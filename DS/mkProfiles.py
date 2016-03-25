@@ -6,7 +6,7 @@ import sys
 import numpy as np
 from scipy.spatial import distance
 
-path_to_PeARS="/home/user/Documents/Papers/PeARS/exp/DS/user-pears-entropy-normalised/"
+path_to_PeARS = "/home/user/PeARS-evaluation/DS/user-pears/"
 stopwords=["","i","a","about","an","and","each","are","as","at","be","are","were","being","by","do","does","did","for","from","how","in","is","it","its","make","made","of","on","or","s","that","the","this","to","was","what","when","where","who","will","with","has","had","have","he","she","one","also","his","her","their","only","both","they","however","then","later","but","never","which","many"]
 num_dimensions=400
 dm_dict={}
@@ -15,18 +15,13 @@ dm_dict={}
 # Read list of users
 ###############################################
 
-def readUsers():
+def readUsers(usernames_file):
 	#print "Getting users..."
 	users=[]
-	#f=open("../wiki-users/wikiQA.1242.usernames.txt",'r')
-	f=open("usernames.tmp",'r')
-	c=0
+	f=open(usernames_file,'r')
 	for l in f:
-		if c > 0:
-			l=l.rstrip('\n')
-			users.append(l)
-		else:
-			c+=1
+		l=l.rstrip('\n')
+		users.append(l)
 	f.close()
 	return users
 
@@ -47,7 +42,7 @@ def normalise(v):
 def readDM():
 	c=0
         #Make dictionary with key=row, value=vector
-	dmlines=open("/home/user/Documents/Papers/PeARS/exp/DS/wikipedia.dm",'r')
+	dmlines=open("ukwac.predict.dm",'r')
         for l in dmlines:
 		if c < 10000:
 			items=l.rstrip('\n').split('\t')
@@ -130,7 +125,7 @@ def coherence(vecs):
 
 def computePearDist(pear):
 	vbase=np.zeros(num_dimensions)
-	ivecs_for_coh=[]				#Store vectors for this user in order to compute coherence
+	vecs_for_coh=[]				#Store vectors for this user in order to compute coherence
 	#Open document distributions file
 	doc_dists=open(path_to_PeARS+pear+".urls.dists.txt","r")
 	for l in doc_dists:
@@ -151,8 +146,8 @@ def computePearDist(pear):
 	dist_str=dist_str.rstrip(' ')
 
 
-	coh=0
-	#coh=coherence(vecs_for_coh)
+	#coh=0
+	coh=coherence(vecs_for_coh)
 	#print coh
 	return vbase,dist_str,coh
 
@@ -169,18 +164,18 @@ def createProfileFile(pear,pear_dist,topics_s,coh):
 ###################
 # Entry point
 ###################
-def runScript():
+def runScript(usernames_file):
 	readDM()
-	users=readUsers()
+	users=readUsers(usernames_file)
 	for u in users:
 		print "Computing pear for",u
-		try:
-			v,print_v,coh=computePearDist(u)
-			topics,topics_s=sim_to_matrix(v,20)
-			createProfileFile(u,print_v,topics_s,coh)
-		except:
-			print "ERROR: PERHAPS PEAR NOT FOUND?"
+		#try:
+		v,print_v,coh=computePearDist(u)
+		topics,topics_s=sim_to_matrix(v,20)
+		createProfileFile(u,print_v,topics_s,coh)
+		#except:
+		#	print "ERROR: PERHAPS PEAR NOT FOUND?"
 
 if __name__ == '__main__':
 	# when executing as script
-	runScript()
+	runScript(sys.argv[1])

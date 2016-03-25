@@ -3,14 +3,14 @@
 # words in the page (obtained via entropy calculation)
 #####################################################################
 
-from numpy import *
+import numpy as np
 import math
 import sys
 import os
 import re
 
 
-path_to_PeARS = "/home/user/Documents/Papers/PeARS/exp/DS/"
+path_to_PeARS = "/home/user/PeARS-evaluation/DS/"
 num_dimensions=400
 stopwords=["","(",")","a","about","an","and","are","around","as","at","away","be","become","became","been","being","by","did","do","does","during","each","for","from","get","have","has","had","he","her","his","how","i","if","in","is","it","its","made","make","many","most","not","of","on","or","s","she","some","that","the","their","there","this","these","those","to","under","was","were","what","when","where","which","who","will","with","you","your"]
 
@@ -33,7 +33,7 @@ def normalise(v):
 #################################################
 
 def readDM():
-	with open(path_to_PeARS+"wikipedia.dm") as f:
+	with open(path_to_PeARS+"ukwac.predict.dm") as f:
 		dmlines=f.readlines()
 		f.close()
 
@@ -66,7 +66,7 @@ def sim_to_matrix(vec,n):
         cosines={}
 	c=0
         for k,v in dm_dict.items():
-		cos=cosine_similarity(array(vec),array(v))
+		cos=cosine_similarity(np.array(vec),np.array(v))
 		cosines[k]=cos
 		c+=1
 
@@ -121,7 +121,7 @@ def weightFile(buff):
 
 def mkVector(word_dict):
 	#Initialise vbase and doc_dist vectors
-	vbase=zeros(num_dimensions)
+	vbase=np.zeros(num_dimensions)
 	#Add vectors together
 	if len(word_dict) > 0:
 		c=0
@@ -129,7 +129,7 @@ def mkVector(word_dict):
 			if c < 5:
 				#print w,word_dict[w]
 				if w in dm_dict:
-					vbase=vbase+float(word_dict[w])*array(dm_dict[w])
+					vbase=vbase+float(word_dict[w])*np.array(dm_dict[w])
 			c+=1
 
 		vbase=normalise(vbase)

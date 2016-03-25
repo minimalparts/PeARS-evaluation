@@ -1,6 +1,7 @@
 ####################################################################
 # Make pears for specific users using a list of documents they have
 # read.
+# USAGE: python ./mkpears.py usernames.txt users.pages.edited.txt
 ####################################################################
 
 import sys
@@ -10,7 +11,7 @@ dists={}
 userpages={}
 
 def readDM():
-	f=open("wikiQA.1242.urls.dists.dm")
+	f=open("example.docs.dm")
 	for l in f:
 		l=l.rstrip('\n')
 		fields=l.split()
@@ -20,34 +21,23 @@ def readDM():
 		dists[page]=l
 	f.close()
 
-def readUsers():
+def readUsers(usernames_file):
 	users=[]
-	f=open("../wiki-users/wikiQA.1242.usernames.txt",'r')
-	#f=open("usernames.tmp",'r')
-	c=0
+	f=open(usernames_file,'r')
 	for l in f:
-		if c > 0:
-			l=l.rstrip('\n')
-			users.append(l)
-		else:
-			c+=1
+		l=l.rstrip('\n')
+		users.append(l)
 	f.close()
 	return users
 
-def readEditedPages():
-	f=open("../wiki-users/wikiQA.1242.users.pages.edited.txt",'r')
-	c=0
+def readEditedPages(pages_edited_file):
+	f=open(pages_edited_file,'r')
 	for l in f:
-		if c > 0:						#Don't read first line
-			l=l.rstrip('\n')
-			fields=l.split('\t')
-			m=re.search(" (.*)",fields[0])
-			if m:
-				user=m.group(1)
-				pages=fields[1:]
-				userpages[user]=pages
-		else:
-			c+=1
+		l=l.rstrip('\n')
+		fields=l.split()
+		user=fields[0]
+		pages=fields[1:]
+		userpages[user]=pages
 	return pages
 
 def getDists(pages,user):
@@ -61,15 +51,18 @@ def getDists(pages,user):
 ##################################
 # Entry point
 ##################################
+def runScript(usernames_file,pages_edited_file):
+	users=readUsers(usernames_file)
+	print "Found",len(users),"users..."
+	readEditedPages(pages_edited_file)
+	readDM()
 
-users=readUsers()
-print "Found",len(users),"users..."
-readEditedPages()
-readDM()
+	for u in users:
+		pages=userpages[u]
+		if len(pages)>0:
+			print u
+			getDists(pages,u)
 
-
-for u in users:
-	pages=userpages[u]
-	if len(pages)>0:
-		print u
-		getDists(pages,u)
+# when executing as script
+if __name__ == '__main__':
+    runScript(sys.argv[1],sys.argv[2])	
