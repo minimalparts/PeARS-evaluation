@@ -1,0 +1,13 @@
+rm -f shared_pears_ids.dm
+
+#The general case. Use all nodes
+getAllNodes(){
+	for c in ../DS/user-pears/*profile.txt; 
+	do 
+		user=`echo $c|sed "s/.*\///"|sed "s/.profile.txt//"`; 
+		egrep "^pear_id" $c|sed "s/pear_id:/$user /"; 
+	done > shared_pears_ids.dm;
+}
+
+getAllNodes
+		
