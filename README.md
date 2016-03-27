@@ -17,7 +17,7 @@ The semantic space of Baroni et al (2014): Don't count, predict! A systematic co
 
 ### A clean version of Wikipedia
 
-We provide a clean dump of Wikipedia, processed the excellent *wikiextractor* (https://github.com/attardi/wikiextractor). The dump can be downloaded from http://www.clic.cimec.unitn.it/~aurelie.herbelot/enwiki-20150304-clean.tar.gz (3.8GB, dump dated March 2015). Warning: uncompressed, the directory contains 103 files totalling 11GB of data.
+We provide a clean dump of Wikipedia, processed by the excellent *wikiextractor* (https://github.com/attardi/wikiextractor). The dump can be downloaded from http://www.clic.cimec.unitn.it/~aurelie.herbelot/enwiki-20150304-clean.tar.gz (3.8GB, dump dated March 2015). Warning: uncompressed, the directory contains 103 files totalling 11GB of data.
 
 ### Some users
 
