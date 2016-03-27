@@ -1,2 +1,2 @@
-user1 Anarchism
-user2 Anarchism Albedo
+user1::1::Anarchism
+user2::2::Anarchism Albedo

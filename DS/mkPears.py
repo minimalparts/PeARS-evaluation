@@ -34,9 +34,9 @@ def readEditedPages(pages_edited_file):
 	f=open(pages_edited_file,'r')
 	for l in f:
 		l=l.rstrip('\n')
-		fields=l.split()
+		fields=l.split("::")
 		user=fields[0]
-		pages=fields[1:]
+		pages=fields[2].split()
 		userpages[user]=pages
 	return pages
 
