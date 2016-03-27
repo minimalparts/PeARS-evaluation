@@ -1,7 +1,7 @@
 # PeARS-evaluation
 A repo for the evaluation of the PeARS search engine.
 
-#Requirements
+##Requirements
 To use the code in this repo, you will need the following. 
 
 ### A semantic space
@@ -21,4 +21,4 @@ We provide a clean dump of Wikipedia, processed the excellent *wikiextractor* (h
 
 ### Some users
 
-We simulate network users by utilising the public log of Wikipedia edits, regularly made available at https://dumps.wikimedia.org/enwiki/latest/ (look for the https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-logging.xml.gz file). In the data/ directory of this repo, you will find a script, getUserData.py, to extract the relevant user infor from the log. For convenience, we are also making an already processed version available at http://www.clic.cimec.unitn.it/~aurelie.herbelot/user-data.tar.gz (log of March 2016).
+We simulate network users by utilising the public log of Wikipedia edits, regularly made available at https://dumps.wikimedia.org/enwiki/latest/ (look for the https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-logging.xml.gz file). In the data/ directory of this repo, you will find a script, getUserData.py, to extract the relevant user info from the log. For convenience, we are also making an already processed version available at http://www.clic.cimec.unitn.it/~aurelie.herbelot/user-data.tar.gz (log of March 2016).
